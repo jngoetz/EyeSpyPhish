@@ -6,9 +6,12 @@ library(dplyr)
 library(gratia)
 
 
-setwd("I:/Cyber")
-df <- read.csv("aggregate_data.csv")  %>%
-  mutate(subject = as.factor(RECORDING_SESSION_LABEL))
+df <- read.csv("aggregate_data.csv")
+
+mean <- df %>%
+  summarise(across(overall_duration_mean:mean_total_distance, ~ mean(.x)))
+sd <- df %>%
+  summarise(across(overall_duration_mean:mean_total_distance, ~ sd(.x)))
 
 
 model_linear <- gam(legitpresence ~ 
